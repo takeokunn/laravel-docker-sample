@@ -1,0 +1,58 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.2.1-apache-node-browsers
+      - image: circleci/mysql:5.7
+    environment:
+      - APP_DEBUG: true
+      - APP_ENV: testing
+      - APP_KEY: base64:HqZ6aVfJfMy/M68M/YcSEI7HIvHpnyTo8fV9TSKr+5I=
+      - APP_URL: http://127.0.0.1:8000
+      - DB_CONNECTION: mysql
+      - DB_HOST: 127.0.0.1
+      - DB_PORT: 3306
+      - DB_DATABASE: circle_test
+      - DB_USERNAME: root
+      - MYSQL_ALLOW_EMPTY_PASSWORD: true
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: sudo apt-get install -y libzip-dev libpng-dev libsqlite3-dev
+      - run: sudo docker-php-ext-install pdo_mysql zip
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+          - v1-dependencies-
+      - run:
+          name: Install php-ast
+          command: |
+            cd ~
+            git clone https://github.com/nikic/php-ast
+            cd php-ast
+            phpize
+            ./configure
+            make
+            sudo make install
+            echo -e "extension=ast.so" | sudo tee /usr/local/etc/php/php.ini > /dev/null
+      - run: cd ~/repo
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+      - restore_cache:
+          name: Restore npm cache
+          keys:
+            - npm-{{ checksum "package.json" }}
+      - run:
+          name: npm install -g yarn
+          command: npm install -g yarn
+      - save_cache:
+          name: Store npm cache
+          key: npm-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run: php artisan migrate
+      - run: composer lint
+      - run: composer phan

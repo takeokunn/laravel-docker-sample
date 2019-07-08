@@ -1,0 +1,38 @@
+version: '3'
+services:
+  ############## web ##############
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    command: php artisan serve --host 0.0.0.0
+    volumes:
+      - .:/app:cached
+    links:
+      - redis
+      - db
+    environment:
+      RAILS_ENV: development
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: P@ssw0rd
+      DB_DATABASE: laravel
+      REDIS_HOST: redis
+    ports:
+      - 18000:8000
+
+  ############## mysql ##############
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: "laravel"
+    volumes:
+      - ./tmp/docker/mysql:/var/lib/mysql:delegated
+      - ./docker/mysql/config:/etc/mysql/conf.d:cached
+
+  ############## redis ##############
+  redis:
+    image: redis:latest
