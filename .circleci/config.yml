@@ -29,7 +29,6 @@ commands:
       - save_cache:
           name: Cache npm dependencies
           key: npm-{{ checksum "package-lock.json" }}-{{ .Environment.CACHE_VERSION_NPM }}
-
   composer-install:
     steps:
       - restore_cache:
@@ -41,14 +40,19 @@ commands:
       - save_cache:
           name: Cache composer dependencies
           key: composer-{{ checksum "composer.lock" }}-{{ .Environment.CACHE_VERSION_NPM }}
-  test:
+  # test:
+  #   steps:
+  #     - run:
+  #         name: composer lint
+  #         command: composer lint
+  #     - run:
+  #         name: composer phan
+  #         command: composer phan
+  deploy:
     steps:
-      - composer_lint:
-          name: composer lint
-          command: composer lint
-      - composer_phan:
-          name: composer phan
-          command: composer phan
+      - run:
+        command: echo "good"
+
 jobs:
   build:
     executor:
@@ -57,10 +61,17 @@ jobs:
       - checkout
       - npm-install
       - composer-install
-      - test
+      # - test
 
 workflows:
   version: 2
-  build:
+  build-deploy:
     jobs:
       - build:
+          filters:
+            branches:
+              ignore: master
+      - deploy:
+          filters:
+            branches:
+              only: master
