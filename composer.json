@@ -68,6 +68,9 @@
         ],
         "lint": [
             "vendor/bin/phpcs"
+        ],
+        "test": [
+            "vendor/bin/phpunit"
         ]
     }
 }

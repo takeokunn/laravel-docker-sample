@@ -71,6 +71,11 @@ commands:
       - run:
           name: phan
           command: composer phan
+  phpunit:
+    steps:
+      - run:
+          name: phpunit
+          command: composer test
   deploy:
     steps:
       - run: echo "deploy!!!"
@@ -94,6 +99,11 @@ jobs:
       name: default
     steps:
       - phan
+  phpunit:
+    executor:
+      name: default
+    steps:
+      - phpunit
   deploy:
     executor:
       name: default
@@ -111,7 +121,11 @@ workflows:
       - phan:
           requires:
             - build
+      - phpunit:
+          requires:
+            - build
       - deploy:
           requires:
             - phan
             - lint
+            - phpunit
