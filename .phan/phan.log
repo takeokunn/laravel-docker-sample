@@ -1,9 +1,0 @@
-app/Http/Controllers/TestController.php:7 PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace RedirectResponse (\Illuminate\Http\RedirectResponse)
-app/Http/Controllers/TestController.php:7 PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace Request (\Illuminate\Http\Request)
-app/Providers/AuthServiceProvider.php:5 PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace Gate (\Illuminate\Support\Facades\Gate)
-app/Providers/EventServiceProvider.php:5 PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace Event (\Illuminate\Support\Facades\Event)
-app/User.php:6 PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace MustVerifyEmail (\Illuminate\Contracts\Auth\MustVerifyEmail)
-routes/console.php:17 PhanUndeclaredThis Variable $this is undeclared
-routes/web.php:18 PhanInvalidFQSENInCallable Possible call to a function 'TestController@test' with an invalid FQSEN.
-tests/Feature/ExampleTest.php:6 PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace RefreshDatabase (\Illuminate\Foundation\Testing\RefreshDatabase)
-tests/Unit/ExampleTest.php:6 PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace RefreshDatabase (\Illuminate\Foundation\Testing\RefreshDatabase)
