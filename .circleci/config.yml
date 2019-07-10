@@ -18,7 +18,7 @@ executors:
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
 
 commands:
-  persist:
+  persist-workspace:
     steps:
       - persist_to_workspace:
           root: ~/workspace
@@ -92,7 +92,7 @@ jobs:
       - checkout
       - npm-install
       - composer-install
-      - persist
+      - persist-workspace
   lint:
     executor:
       name: default
