@@ -40,14 +40,14 @@ commands:
       - save_cache:
           name: Cache composer dependencies
           key: composer-{{ checksum "composer.lock" }}-{{ .Environment.CACHE_VERSION_NPM }}
-  # test:
-  #   steps:
-  #     - run:
-  #         name: composer lint
-  #         command: composer lint
-  #     - run:
-  #         name: composer phan
-  #         command: composer phan
+  test:
+    steps:
+      - run:
+          name: composer lint
+          command: composer lint
+      - run:
+          name: composer phan
+          command: composer phan
   deploy:
     steps:
       - run:
@@ -60,8 +60,6 @@ jobs:
     steps:
       - checkout
       - deploy
-      # - composer-install
-      # - test
 
 workflows:
   version: 2
@@ -70,3 +68,4 @@ workflows:
       - build:
           filters:
             branches:
+              # ignore: master
