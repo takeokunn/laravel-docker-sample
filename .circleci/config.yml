@@ -53,6 +53,9 @@ commands:
       - run:
           name: phpcs
           command: composer lint
+      - run:
+          name: npm lint
+          command: yarn lint
   phan:
     steps:
       - attach_workspace:
