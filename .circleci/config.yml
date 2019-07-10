@@ -18,6 +18,17 @@ executors:
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
 
 commands:
+  npm-install:
+    steps:
+      - restore_cache:
+          name: Restore npm dependencies
+          key: npm-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          name: Cache npm dependencies
+          key: npm-{{ checksum "package-lock.json" }}
   test-command:
     steps:
       - run:
@@ -30,8 +41,7 @@ jobs:
       name: default
     steps:
       - checkout
-      - test-command
-
+      - npm-install
 
 workflows:
   version: 2
