@@ -73,6 +73,8 @@ commands:
           command: composer phan
   phpunit:
     steps:
+      - attach_workspace:
+          at: ~/workspace
       - run:
           name: phpunit
           command: composer test
