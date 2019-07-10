@@ -20,9 +20,15 @@ executors:
 commands:
   npm-install:
     steps:
+       - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: Install dependencies
-          command: npm install
+          name: install npm
+          command: yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+              - node_modules
   test-command:
     steps:
       - run:
@@ -36,7 +42,6 @@ jobs:
     steps:
       - checkout
       - npm-install
-
 workflows:
   version: 2
   build-test:
