@@ -59,8 +59,8 @@ jobs:
       name: default
     steps:
       - checkout
-      - npm-install
-      - composer-install
+      - deploy
+      # - composer-install
       # - test
 
 # workflows:
