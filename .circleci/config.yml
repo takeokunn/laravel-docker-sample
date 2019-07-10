@@ -63,15 +63,10 @@ jobs:
       # - composer-install
       # - test
 
-# workflows:
-#   version: 2
-#   build-deploy:
-#     jobs:
-#       - build:
-#           filters:
-#             branches:
-#               ignore: master
-#       - deploy:
-#           filters:
-#             branches:
-#               only: master
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
