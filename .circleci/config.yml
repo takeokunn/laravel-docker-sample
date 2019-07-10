@@ -80,6 +80,8 @@ commands:
           command: composer test
   deploy:
     steps:
+      - attach_workspace:
+          at: ~/workspace
       - run: echo "deploy!!!"
 
 jobs:
