@@ -95,6 +95,10 @@ jobs:
     steps:
       - phan
   deploy:
+    executor:
+      name: default
+    steps:
+      - deploy
 
 workflows:
   version: 2
