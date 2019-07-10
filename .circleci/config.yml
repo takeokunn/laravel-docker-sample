@@ -18,40 +18,11 @@ executors:
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
 
 commands:
-  npm-install:
-    steps:
-      - restore_cache:
-          name: Restore npm dependencies
-          key: npm-{{ checksum "package-lock.json" }}-{{ .Environment.CACHE_VERSION_NPM }}
-      - run:
-          name: Install dependencies
-          command: npm install
-      - save_cache:
-          name: Cache npm dependencies
-          key: npm-{{ checksum "package-lock.json" }}-{{ .Environment.CACHE_VERSION_NPM }}
-  composer-install:
-    steps:
-      - restore_cache:
-          name: Restore npm dependencies
-          key: composer-{{ checksum "composer.lock" }}-{{ .Environment.CACHE_VERSION_NPM }}
-      - run:
-          name: Install dependencies
-          command: composer install
-      - save_cache:
-          name: Cache composer dependencies
-          key: composer-{{ checksum "composer.lock" }}-{{ .Environment.CACHE_VERSION_NPM }}
-  test:
+  test-command:
     steps:
       - run:
-          name: composer lint
-          command: composer lint
-      - run:
-          name: composer phan
-          command: composer phan
-  deploy:
-    steps:
-      - run:
-        command: echo "good"
+          name: Echo
+          command: echo hello, world.
 
 jobs:
   test:
@@ -59,10 +30,8 @@ jobs:
       name: default
     steps:
       - checkout
-      - npm-install
-      - composer-install
-      - test
-      - deploy
+      - test-command
+
 
 workflows:
   version: 2
