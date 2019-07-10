@@ -36,6 +36,9 @@ return [
     //       to `exclude_analysis_directory_list`.
     'exclude_analysis_directory_list' => [
         '.phan',
-        'vendor/'
+        'vendor/',
+        'app/',
+        'routes',
+        'tests/'
     ]
 ];
