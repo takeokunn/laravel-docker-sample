@@ -7,16 +7,12 @@ WORKDIR /workspace
 
 COPY . .
 
-ADD composer.json /workspace
-ADD composer.lock /workspace
-
+# composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer config -g repos.packagist composer https://packagist.jp
 RUN composer global require hirak/prestissimo
-RUN composer install
 
-# yarn
-ADD package.json /workspace
-ADD yarn.lock /workspace
+# install
+RUN composer install
 RUN npm install -g yarn
-RUN yarn
+RUN yarn install

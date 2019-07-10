@@ -8,7 +8,7 @@ services:
     command: sh docker/web/bootstrap.sh
     env_file: .env
     volumes:
-      - .:/workspace:cached
+      - .:/workspace
       - /workspace/vendor
       - /workspace/node_modules
     links:
@@ -17,7 +17,7 @@ services:
     ports:
       - 18000:8000
 
-  ############## mysql ##############
+  ############## db ##############
   db:
     image: mysql:5.7
     environment:
