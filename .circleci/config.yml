@@ -40,11 +40,27 @@ commands:
           key: composer-cache-{{ checksum "composer.json" }}
           paths:
               - vendor
-  test-command:
+  lint:
     steps:
       - run:
-          name: Echo
-          command: echo hello, world.
+          name: phpcs
+          command: composer lint
+  phan:
+    steps:
+      - run:
+          name: Install php-ast
+          command: |
+            cd ~
+            git clone https://github.com/nikic/php-ast
+            cd php-ast
+            phpize
+            ./configure
+            make
+            sudo make install
+            echo -e "extension=ast.so" | sudo tee /usr/local/etc/php/php.ini > /dev/nul
+      - run:
+          name: phan
+          command: composer phan
 
 jobs:
   test:
@@ -54,7 +70,8 @@ jobs:
       - checkout
       - npm-install
       - composer-install
-      - test-command
+      - lint
+      - phan
 
 workflows:
   version: 2
