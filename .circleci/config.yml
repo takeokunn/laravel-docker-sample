@@ -18,6 +18,11 @@ executors:
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
 
 commands:
+  persist-to-workspace:
+    - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - ./*
   npm-install:
     steps:
       - restore_cache:
@@ -40,10 +45,6 @@ commands:
           key: composer-cache-{{ checksum "composer.json" }}
           paths:
               - vendor
-      - persist_to_workspace:
-          root: ~/workspace
-          paths:
-            - ./*
   lint:
     steps:
       - attach_workspace:
@@ -76,8 +77,9 @@ jobs:
       name: default
     steps:
       - checkout
-      # - npm-install
+      - npm-install
       - composer-install
+      - persist-to-workspace
   lint:
     executor:
       name: default
