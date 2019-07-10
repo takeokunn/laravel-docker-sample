@@ -57,7 +57,7 @@ commands:
             ./configure
             make
             sudo make install
-            echo -e "extension=ast.so" | sudo tee /usr/local/etc/php/php.ini > /dev/nul
+            echo -e "extension=ast.so" | sudo tee /usr/local/etc/php/php.ini > /dev/null
       - run:
           name: phan
           command: composer phan
