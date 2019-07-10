@@ -2,6 +2,7 @@
 init:
 	docker-compose exec web php artisan key:generate
 	docker-compose exec web php artisan migrate
+	docker-compose exec web php artisan db:seed
 
 .PHONY: phan
 phan:
