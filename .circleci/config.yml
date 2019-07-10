@@ -71,6 +71,9 @@ commands:
       - run:
           name: phan
           command: composer phan
+  deploy:
+    steps:
+      - run: echo "deploy!!!"
 
 jobs:
   build:
@@ -91,6 +94,7 @@ jobs:
       name: default
     steps:
       - phan
+  deploy:
 
 workflows:
   version: 2
@@ -103,3 +107,7 @@ workflows:
       - phan:
           requires:
             - build
+      - deploy:
+          requires:
+            - phan
+            - lint
