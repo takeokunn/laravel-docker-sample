@@ -9,7 +9,7 @@
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "lint": "npm-run-all lint:*",
-        "lint:js": "eslint --fix 'resources/js/**/*.{js, vue}'",
+        "lint:js": "eslint 'resources/js/**/*.{js, vue}'",
         "lint:css": "stylelint 'resources/sass/*.scss'"
     },
     "devDependencies": {
