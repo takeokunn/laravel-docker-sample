@@ -21,14 +21,25 @@ commands:
   npm-install:
     steps:
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: npm-cache-{{ checksum "package.json" }}
       - run:
           name: install npm
           command: yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: npm-cache-{{ checksum "package.json" }}
           paths:
               - node_modules
+  composer-install:
+    steps:
+      - restore_cache:
+          key: composer-cache-{{ checksum "composer.json" }}
+      - run:
+          name: install composer
+          command: composer install
+      - save_cache:
+          key: composer-cache-{{ checksum "composer.json" }}
+          paths:
+              - vendor
   test-command:
     steps:
       - run:
@@ -42,6 +53,9 @@ jobs:
     steps:
       - checkout
       - npm-install
+      - composer-install
+      - test-command
+
 workflows:
   version: 2
   build-test:
