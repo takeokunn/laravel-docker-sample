@@ -5,22 +5,9 @@ executors:
     docker:
       - image: circleci/php:7.2.1-apache-node-browsers
       - image: circleci/mysql:5.7
-    environment:
-      - APP_DEBUG: true
-      - APP_ENV: testing
-      - APP_KEY: base64:HqZ6aVfJfMy/M68M/YcSEI7HIvHpnyTo8fV9TSKr+5I=
-      - APP_URL: http://127.0.0.1:8000
-      - DB_CONNECTION: mysql
-      - DB_HOST: 127.0.0.1
-      - DB_PORT: 3306
-      - DB_DATABASE: circle_test
-      - DB_USERNAME: root
-      - MYSQL_ALLOW_EMPTY_PASSWORD: true
 
 jobs:
   build:
-    executor:
-      name: default
     steps:
       - checkout
       - run:
@@ -29,6 +16,6 @@ jobs:
 
 workflows:
   version: 2
-  fuga:
+  build-test:
     jobs:
       - build
