@@ -11,9 +11,9 @@ ADD composer.json /workspace
 ADD composer.lock /workspace
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN php /usr/local/bin/composer config -g repos.packagist composer https://packagist.jp
-RUN php /usr/local/bin/composer global require hirak/prestissimo
-RUN php /usr/local/bin/composer install
+RUN composer config -g repos.packagist composer https://packagist.jp
+RUN composer global require hirak/prestissimo
+RUN composer install
 
 # yarn
 ADD package.json /workspace
