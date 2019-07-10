@@ -20,7 +20,7 @@ executors:
 commands:
   npm-install:
     steps:
-       - restore_cache:
+      - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install npm
