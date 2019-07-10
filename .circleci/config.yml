@@ -40,13 +40,21 @@ commands:
           key: composer-cache-{{ checksum "composer.json" }}
           paths:
               - vendor
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - ./*
   lint:
     steps:
+      - attach_workspace:
+          at: ~/workspace
       - run:
           name: phpcs
           command: composer lint
   phan:
     steps:
+      - attach_workspace:
+          at: ~/workspace
       - run:
           name: Install php-ast
           command: |
@@ -68,7 +76,7 @@ jobs:
       name: default
     steps:
       - checkout
-      - npm-install
+      # - npm-install
       - composer-install
   lint:
     executor:
@@ -87,10 +95,8 @@ workflows:
     jobs:
       - build
       - lint:
-          context: org-global
           requires:
             - build
       - phan:
-          context: org-global
           requires:
             - build
