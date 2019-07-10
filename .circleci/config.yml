@@ -71,19 +71,15 @@ jobs:
       - npm-install
       - composer-install
   lint:
-    executor:
-      name: default
     steps:
       - lint
   phan:
-    executor:
-      name: default
     steps:
       - phan
 
 workflows:
   version: 2
-  build-test:
+  test-paralell:
     jobs:
       - build
       - lint:
