@@ -71,20 +71,26 @@ jobs:
       - npm-install
       - composer-install
   lint:
+    executor:
+      name: default
     steps:
       - lint
   phan:
+    executor:
+      name: default
     steps:
       - phan
 
 workflows:
   version: 2
-  test-paralell:
+  build-test:
     jobs:
       - build
       - lint:
+          context: org-global
           requires:
             - build
       - phan:
+          context: org-global
           requires:
             - build
