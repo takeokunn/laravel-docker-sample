@@ -63,18 +63,32 @@ commands:
           command: composer phan
 
 jobs:
-  test:
+  build:
     executor:
       name: default
     steps:
       - checkout
       - npm-install
       - composer-install
+  lint:
+    executor:
+      name: default
+    steps:
       - lint
+  phan:
+    executor:
+      name: default
+    steps:
       - phan
 
 workflows:
   version: 2
   build-test:
     jobs:
-      - test
+      - build
+      - lint:
+          requires:
+            - build
+      - phan:
+          requires:
+            - build
