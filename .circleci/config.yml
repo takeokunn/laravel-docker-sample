@@ -20,15 +20,9 @@ executors:
 commands:
   npm-install:
     steps:
-      - restore_cache:
-          name: Restore npm dependencies
-          key: npm-{{ checksum "package-lock.json" }}
       - run:
           name: Install dependencies
           command: npm install
-      - save_cache:
-          name: Cache npm dependencies
-          key: npm-{{ checksum "package-lock.json" }}
   test-command:
     steps:
       - run:
