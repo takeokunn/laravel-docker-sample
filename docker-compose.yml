@@ -17,6 +17,21 @@ services:
     ports:
       - 18000:8000
 
+  ############## job ##############
+  job:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    command: php artisan queue:work
+    env_file: .env
+    volumes:
+      - .:/workspace
+      - /workspace/vendor
+      - /workspace/node_modules
+    links:
+      - redis
+      - db
+
   ############## db ##############
   db:
     image: mysql:5.7
